@@ -1,18 +1,37 @@
-console.log('Twitter streaming is starting');
+module.exports = {
+  StartTweetStream: async function() {
+    console.log('Twitter streaming is starting');
 
-var Twit = require('twit');
-module.export = {
-    StartTweetStream: async function() {
-        var config = require('./config.js');
-        
-        var T = new Twit(config);
+    var Twit = require('twit');
+    var config = require('./config.js');
+    
+    var T = new Twit(config);
+    var stream = T.stream('statuses/sample')
 
-        var stream = T.stream('statuses/sample')
-         
-        stream.on('tweet', function (tweet) {
-          console.log('------------------------------');
-          console.log(tweet);
-          console.log('------------------------------');
-        });
+    stream.on('tweet', function (tweet) {
+      onTweetReceived(tweet);
+    });
+  }
+}
+
+async function onTweetReceived(tweet) {
+  try {
+    var lang = tweet['lang'];
+    var text = tweet['text'];
+    var hashtags = [];
+
+    for (var i = 0; i < tweet['entities']['hashtags'].length; i++) {
+      hashtags[i] = tweet['entities']['hashtags'][i]['text'];
     }
+
+    if(hashtags.length > 0) {
+      console.log('\x1b[31m', 'Lang: ' + lang, '\x1b[32m', 'Hashtags: ' + hashtags);
+      console.log('\x1b[34m', 'Text: ' + text + '\x1b[0m\n');
+    }
+
+    // console.log(tweet);
+  }
+  catch (error) {
+    console.log(error);
+  }
 }
