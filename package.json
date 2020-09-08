@@ -1,0 +1,15 @@
+{
+  "name": "polyanalytics",
+  "version": "1.0.0",
+  "description": "Social media analysis",
+  "main": "tweet.js",
+  "scripts": {
+    "start": "node tweet.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michaël BUGNONE",
+  "license": "ISC",
+  "dependencies": {
+    "twit": "^2.2.11"
+  }
+}
