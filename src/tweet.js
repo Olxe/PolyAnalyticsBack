@@ -1,3 +1,5 @@
+var TweetSchema = require('../schema/tweetSchema.js');
+
 module.exports = {
   StartTweetStream: async function() {
     console.log('Twitter streaming is starting');
@@ -25,7 +27,17 @@ async function onTweetReceived(tweet) {
     }
 
     if(hashtags.length > 0) {
-      console.log('\x1b[31m', 'Lang: ' + lang, '\x1b[32m', 'Hashtags: ' + hashtags);
+
+      var tweetSchema = new TweetSchema({
+        hashtag : hashtags,
+        text : text,
+        lang : lang
+      });
+
+      tweetSchema.save();
+
+      console.log('\x1b[31m', 'Lang: ' + lang);
+      console.log('\x1b[32m', 'Hashtags: ' + hashtags);
       console.log('\x1b[34m', 'Text: ' + text + '\x1b[0m\n');
     }
 
