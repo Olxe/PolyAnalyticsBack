@@ -5,17 +5,18 @@ var config = require('./config.js');
 var T = new Twit(config);
 
 module.exports = {
+
   StartTweetStream: async function() {
     console.log('Twitter streaming is starting');
 
-    T.get('followers/ids', { screen_name: 'MichaelBugnone' },  function (err, data, response) {
+    T.get('followers/ids', { screen_name: 'MichaelBugnone' }, function (err, data, response) {
       for (var i = 0; i < data['ids'].length; i++) {
-        // console.log(data['ids'][i]);
 
         if(data.length > 0) {
           var id = data[0]['ids']
           console.log(id);
         }
+
         // getFollowerLookup(data['ids'][i]);
       }
     });
